@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+<form action="/team/new" method="POST">
+    <div class="row">
+        <div class="col">
+            <label for="Team">2012 MLB Team</label>
+            <input id="Team" type="text" class="form-control" placeholder="Team" name="Team">
+        </div>
+        <div class="col">
+            <label for="Payroll_millions">Payroll</label>
+            <input id="Payroll_millions" type="text" class="form-control" placeholder="Payroll_millions"
+                   name="Payroll_millions">
+        </div>
+        <div class="col">
+            <label for="Wins">Wins</label>
+            <input id="Wins" type="text" class="form-control" placeholder="Wins" name="Wins">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Success</button>
+
+</form>
+
+{% endblock %}
