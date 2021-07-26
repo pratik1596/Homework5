@@ -11,7 +11,7 @@
     <tbody>
     {% for team in teams %}
     <tr>
-        <td>{{ team.Team }}</td>
+        <td><a href="/view/{{ team.id }}">{{ team.Team }}</a></td>
         <td>{{ team.Payroll_millions }}</td>
         <td>{{ team.Wins }}</td>
     </tr>
