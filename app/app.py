@@ -2,6 +2,7 @@ from typing import List, Dict
 import mysql.connector
 import simplejson as json
 from flask import Flask, Response
+from flask import render_template
 
 app = Flask(__name__)
 
@@ -25,9 +26,15 @@ def teams_import() -> List[Dict]:
 
     return result
 
-
 @app.route('/')
 def index() -> str:
+    user = {'username' : 'Pratik'}
+    teams_data = teams_import()
+
+    return render_template('index.html', title = 'Home', user = user, teams = teams_data)
+
+@app.route('/api/teams')
+def teams() -> str:
     js = json.dumps(teams_import())
     resp = Response(js, status=200, mimetype='application/json')
     return resp
