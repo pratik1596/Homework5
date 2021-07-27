@@ -1,20 +1,20 @@
 {% extends "layout.html" %}
 {% block content %}
-<form action="/app/templates/edit.html/{{team.id}}" method="post">
+<form action="/edit/{{team.id}}" method="post">
     <div class="row">
-        <div class="col">
+
             <label for="Team">2012 MLB Team</label>
             <input id="Team" type="text" class="form-control" placeholder="Team" name="Team" value="{{team.Team}}">
-        </div>
-        <div class="col">
+
+
             <label for="Payroll_millions">Payroll</label>
             <input id="Payroll_millions" type="text" class="form-control" placeholder="Payroll"
                    name="Payroll_millions" value="{{team.Payroll_millions}}">
-        </div>
-        <div class="col">
+
+
             <label for="Wins">Total Wins</label>
             <input id="Wins" type="text" class="form-control" placeholder="Wins" name="Wins" value="{{team.Wins}}">
-        </div>
+
     </div>
     <button type="submit" class="btn btn-success">Save</button>
 
