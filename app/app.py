@@ -74,8 +74,8 @@ def form_delete_post(team_id):
     return redirect("/", code=302)
 
 
-@app.route('/api/v1/cities', methods=['GET'])
-def api_browse() -> str:
+@app.route('/api/v1/teams', methods=['GET'])
+def api_browse_dumps() -> str:
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM teamsData.mlb_teams')
     result = cursor.fetchall()
@@ -84,13 +84,46 @@ def api_browse() -> str:
     return resp
 
 
-@app.route('/api/v1/cities/<int:city_id>', methods=['GET'])
-def api_retrieve(city_id) -> str:
+@app.route('/api/v1/teams/<int:team_id>', methods=['GET'])
+def api_retrieve_dumps(team_id) -> str:
     cursor = mysql.get_db().cursor()
-    cursor.execute('SELECT * FROM teamsData.mlb_teams WHERE id=%s', city_id)
+    cursor.execute('SELECT * FROM teamsData.mlb_teams WHERE id=%s', team_id)
     result = cursor.fetchall()
     json_result = json.dumps(result)
     resp = Response(json_result, status=200, mimetype='application/json')
+    return resp
+
+@app.route('/api/v1/teams', methods=['POST'])
+def api_add() -> str:
+
+    content = request.json
+
+    cursor = mysql.get_db().cursor()
+    inputData = (content['Team'], content['Payroll_millions'], content['Wins'])
+    sql_insert_query = """INSERT INTO teamsData.mlb_teams (Team,Payroll_millions, Wins) VALUES (%s,%s, %s) """
+    cursor.execute(sql_insert_query, inputData)
+    mysql.get_db().commit()
+    resp = Response(status=201, mimetype='application/json')
+    return resp
+
+@app.route('/api/v1/teams/<int:team_id>', methods=['PUT'])
+def api_edit(team_id) -> str:
+    cursor = mysql.get_db().cursor()
+    content = request.json
+    inputData = (content['Team'], content['Payroll_millions'], content['Wins'], team_id)
+    sql_update_query = """UPDATE teamsData.mlb_teams p SET p.Team = %s, p.Payroll_millions = %s, p.Wins = %s WHERE p.id = %s """
+    cursor.execute(sql_update_query, inputData)
+    mysql.get_db().commit()
+    resp = Response(status=200, mimetype='application/json')
+    return resp
+
+@app.route('/api/v1/teams/<int:team_id>', methods=['DELETE'])
+def api_delete(team_id) -> str:
+    cursor = mysql.get_db().cursor()
+    sql_delete_query = """DELETE FROM teamsData.mlb_teams WHERE id = %s """
+    cursor.execute(sql_delete_query, team_id)
+    mysql.get_db().commit()
+    resp = Response(status=200, mimetype='application/json')
     return resp
 
 if __name__ == '__main__':
