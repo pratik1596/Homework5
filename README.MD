@@ -9,3 +9,6 @@ This is a .csv file of MLB Teams from 2012. The records contain attributes such 
 ### __SQL Converter:__ https://sqlizer.io/#/
 This converter converts 100 CSV records into SQL inserts.
 
+### __Postman Results:__
+The project was extended with Postman to show GET, PUT, POST, DELETE requests.
+
